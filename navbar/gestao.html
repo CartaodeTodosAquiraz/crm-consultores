@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="estilo.css" />
+  <script type="text/javascript" src="app.js" defer></script>
+  <script src="script.js"></script>
+</head>
+<body>
+  <nav id="sidebar">
+    <ul>
+      <li>
+        <span class="logo">CRM Consultor</span>
+        <button onclick=toggleSidebar() id="toggle-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"/></svg>
+        </button>
+      </li>
+      <li class="active">
+        <a href="gestao.html">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-200q0-17 11.5-28.5T400-440h160q17 0 28.5 11.5T600-400v200h120v-360L480-740 240-560v360Zm-80 0v-360q0-19 8.5-36t23.5-28l240-180q21-16 48-16t48 16l240 180q15 11 23.5 28t8.5 36v360q0 33-23.5 56.5T720-120H560q-17 0-28.5-11.5T520-160v-200h-80v200q0 17-11.5 28.5T400-120H240q-33 0-56.5-23.5T160-200Zm320-270Z"/></svg>
+          <span>Gestão</span>
+        </a>
+      </li>
+      <li>
+        <a href="profile.html">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-240v-32q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v32q0 33-23.5 56.5T720-160H240q-33 0-56.5-23.5T160-240Zm80 0h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg>
+          <span>Adicionar Lead</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <main>
+
+  <div id="nome-consultor" style="padding: 10px 20px; font-weight: bold; color: white; font-size: 18px;"></div>
+
+        <!-- CRM com 7 colunas e drag-and-drop -->
+<section id="crm-section">
+  <div class="lead-stats">
+    <div>Leads Hoje: <span id="leads-hoje">0</span></div>
+    <div>Leads Ontem: <span id="leads-ontem">0</span></div>
+  </div>
+  <div class="crm-board">
+    <div class="column" data-status="novo">
+      <h3>Novo Lead</h3>
+      <div class="lead-list"></div>
+    </div>
+    <div class="column" data-status="aguardando">
+      <h3>Aguardando Retorno</h3>
+      <div class="lead-list"></div>
+    </div>
+    <div class="column" data-status="retorno">
+      <h3>Retorno</h3>
+      <div class="lead-list"></div>
+    </div>
+    <div class="column" data-status="agendado">
+      <h3>Agendado</h3>
+      <div class="lead-list"></div>
+    </div>
+    <div class="column" data-status="preparar">
+      <h3>Preparar nova Tentativa</h3>
+      <div class="lead-list"></div>
+    </div>
+    <div class="column" data-status="vendas">
+      <h3>Vendas</h3>
+      <div class="lead-list"></div>
+    </div>
+    <div class="column" data-status="perdido">
+      <h3>Perdidos</h3>
+      <div class="lead-list"></div>
+    </div>
+  </div>
+
+  <!-- Modal para editar informações do lead -->
+  <div id="leadModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModal()">&times;</span>
+      <h3>Editar Lead</h3>
+      <input type="text" id="editNome" placeholder="Nome do Lead" />
+      <input type="tel" id="editTelefone" placeholder="Telefone" />
+      <textarea id="editObs" placeholder="Observações"></textarea>
+      <label>Tipo da Próxima Ação:</label>
+      <select id="editTipoAcao">
+        <option value="Mensagem">Mensagem</option>
+        <option value="Ligação">Ligação</option>
+      </select>
+      <input type="datetime-local" id="editProximaAcao" />
+      <button onclick="salvarEdicao()">Salvar</button>
+    </div>
+  </div>
+</section>
+
+<div style="text-align: center; margin-top: 10px;">
+  <button onclick="logout()" style="background: #f44336; padding: 8px 16px; border: none; border-radius: 6px; color: white; font-weight: bold; cursor: pointer;">Sair</button>
+</div>
+
+
+<style>
+  #crm-section {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+  }
+  .lead-stats {
+    display: flex;
+    gap: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .crm-board {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .column {
+    background: #202124;
+    border-radius: 10px;
+    padding: 10px;
+    width: 230px;
+    min-height: 300px;
+  }
+  .column h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .lead {
+    background: #303134;
+    margin: 5px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: move;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    background: #202124;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+  }
+  .modal-content input,
+  .modal-content textarea {
+    width: 100%;
+    margin: 5px 0;
+    padding: 8px;
+    background: #303134;
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+  }
+  .modal-content button {
+    background: #4caf50;
+    color: white;
+    padding: 8px;
+    border: none;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .delete-btn {
+  cursor: pointer;
+  color: #ff5555;
+  font-size: 16px;
+  margin-left: 10px;
+}
+.lead {
+  background: #303134;
+  margin: 5px;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: grab;
+  user-select: none;      /* Impede seleção de texto ao arrastar */
+}
+.lead:active {
+  cursor: grabbing;
+}
+.lead-list {
+  min-height: 150px;
+  max-height: 70vh;         /* altura máxima para scroll */
+  overflow-y: auto;         /* ativa scroll vertical */
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lead-list::-webkit-scrollbar {
+  width: 6px;
+}
+.lead-list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+.lead-list::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+
+</style>
+
+<script>
+  let draggedItem = null;
+  let draggedIndex = null;
+
+  function abrirModal(element) {
+    const index = element.dataset.index;
+    const leads = JSON.parse(localStorage.getItem("leads") || "[]");
+    const lead = leads[index];
+
+    document.getElementById("editNome").value = lead.nome || "";
+    document.getElementById("editTelefone").value = lead.telefone || "";
+    document.getElementById("editObs").value = lead.obs || "";
+    document.getElementById("editProximaAcao").value = lead.proximaAcao || "";
+    document.getElementById("editTipoAcao").value = lead.tipoAcao || "Mensagem";
+
+    document.getElementById("leadModal").dataset.index = index;
+    document.getElementById("leadModal").style.display = "flex";
+  }
+
+  function fecharModal() {
+    document.getElementById("leadModal").style.display = "none";
+  }
+
+  function salvarEdicao() {
+    const leads = JSON.parse(localStorage.getItem("leads") || "[]");
+    const index = document.getElementById("leadModal").dataset.index;
+
+    if (index !== undefined && leads[index]) {
+      leads[index].nome = document.getElementById("editNome").value;
+      leads[index].telefone = document.getElementById("editTelefone").value;
+      leads[index].obs = document.getElementById("editObs").value;
+      leads[index].proximaAcao = document.getElementById("editProximaAcao").value;
+      leads[index].tipoAcao = document.getElementById("editTipoAcao").value;
+
+      localStorage.setItem("leads", JSON.stringify(leads));
+      alert("Lead atualizado com sucesso!");
+      location.reload();
+    }
+
+    fecharModal();
+  }
+
+  function deletarLead(index) {
+    if (confirm("Deseja apagar este lead?")) {
+      let leads = JSON.parse(localStorage.getItem("leads") || "[]");
+      leads.splice(index, 1);
+      localStorage.setItem("leads", JSON.stringify(leads));
+      location.reload();
+    }
+  }
+
+  function drop(e) {
+    e.preventDefault();
+    const targetList = e.currentTarget;
+    const column = targetList.closest(".column");
+    const newStatus = column.dataset.status;
+
+    const leads = JSON.parse(localStorage.getItem("leads") || "[]");
+
+    if (draggedIndex !== null && leads[draggedIndex]) {
+      leads[draggedIndex].status = newStatus;
+      localStorage.setItem("leads", JSON.stringify(leads));
+      location.reload();
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem("usuarioLogado");
+    window.location.href = "index.html";
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado") || "{}");
+
+    if (!usuario.nome) {
+      alert("Faça login primeiro!");
+      window.location.href = "index.html";
+      return;
+    }
+
+    document.getElementById("nome-consultor").textContent = `👤 Consultor: ${usuario.nome}`;
+
+
+    const leads = JSON.parse(localStorage.getItem("leads") || "[]");
+    const hoje = new Date().toISOString().split("T")[0];
+    const ontem = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+    let countHoje = 0, countOntem = 0;
+
+    leads.forEach((lead, index) => {
+      if (lead.consultor?.toLowerCase() !== usuario.nome.toLowerCase()) return;
+
+      const leadEl = document.createElement("div");
+      leadEl.className = "lead";
+      leadEl.draggable = true;
+      leadEl.dataset.index = index;
+
+      leadEl.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>${lead.nome}</strong>
+          <span class="delete-btn" onclick="deletarLead(${index})" title="Excluir Lead">🗑️</span>
+        </div>
+        📞 ${lead.telefone}<br>
+        📌 Origem: ${lead.origem}<br>
+        👤 Consultor: ${lead.consultor}<br>
+        🕐 Entrada: ${new Date(lead.dataHora).toLocaleString()}<br>
+        📝 ${lead.obs || "Sem observações"}<br>
+        🔁 Próx. ação: ${lead.proximaAcao ? `${lead.tipoAcao} em ${new Date(lead.proximaAcao).toLocaleString()}` : "Não definida"}
+      `;
+
+      leadEl.addEventListener("dragstart", (e) => {
+        draggedItem = leadEl;
+        draggedIndex = index;
+        e.dataTransfer.setData("text/plain", index);
+        e.dataTransfer.effectAllowed = "move";
+      });
+
+      leadEl.addEventListener("click", e => {
+        if (!e.target.classList.contains("delete-btn")) abrirModal(leadEl);
+      });
+
+      const dataLead = lead.dataHora?.split("T")[0];
+      if (dataLead === hoje) countHoje++;
+      if (dataLead === ontem) countOntem++;
+
+      const coluna = document.querySelector(`[data-status='${lead.status}'] .lead-list`);
+      if (coluna) coluna.appendChild(leadEl);
+    });
+
+    document.getElementById("leads-hoje").textContent = countHoje;
+    document.getElementById("leads-ontem").textContent = countOntem;
+
+    document.querySelectorAll('.lead-list').forEach(coluna => {
+      coluna.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+      });
+      coluna.addEventListener('drop', drop);
+    });
+  });
+</script>
+  
+  </main>
+</body>
+</html>
